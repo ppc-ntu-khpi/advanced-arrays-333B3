@@ -1,3 +1,104 @@
+## Завдання №11 "Знайти максимальні елементи рядків матриці розміром N x M"
+
+### Клас main.java
+```java
+package domain;
+
+import java.util.Arrays;
+import java.util.Random;
+
+/**
+ * Клас Main надає методи для роботи з матрицями.
+ */
+public class Main {
+
+    /**
+     * Приватний конструктор для заборони створення екземплярів класу.
+     */
+    private Main() {}
+
+    /**
+     * Метод для генерації рандомної матриці заданого розміру.
+     * Кожен елемент матриці є випадковим цілим числом в діапазоні [0, 99].
+     *
+     * @param rows    кількість рядків у матриці
+     * @param columns кількість стовпців у матриці
+     * @return        згенерована рандомна матриця
+     */
+    public static int[][] generateRandomMatrix(int rows, int columns) {
+        Random random = new Random();
+        return random.ints(rows, 0, 100)
+                .mapToObj(row -> random.ints(columns, 0, 100).toArray())
+                .toArray(int[][]::new);
+    }
+
+    /**
+     * Метод для знаходження максимального елемента у заданому рядку матриці.
+     *
+     * @param row рядок матриці
+     * @return    максимальний елемент у рядку
+     */
+    private static int findMaxElementInRow(int[] row) {
+        return Arrays.stream(row).max().orElse(Integer.MIN_VALUE);
+    }
+
+    /**
+     * Метод для знаходження максимальних елементів у кожному рядку заданої матриці.
+     *
+     * @param matrix матриця
+     * @return       масив максимальних елементів у рядках матриці
+     */
+    public static int[] findMaxElements(int[][] matrix) {
+        return Arrays.stream(matrix)
+                .mapToInt(Main::findMaxElementInRow)
+                .toArray();
+    }
+}
+```
+
+### Клас Test.java
+```java
+package test;
+
+import domain.*;
+
+/**
+ * Тестовий клас для перевірки роботи основного класу.
+ */
+public class Test {
+    
+    /**
+     * Метод main для виведення результату роботи основного класу.
+     * 
+     * @param args аргументи командного рядка
+     */
+    public static void main(String[] args) {
+        // Генеруємо рандомну матрицю розміром 3x3
+        int[][] matrix = Main.generateRandomMatrix(3, 3);
+        
+        // Виводимо матрицю
+        System.out.println("Згенерована матриця:");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        
+        // Знаходимо та виводимо максимальні елементи в кожному рядку матриці
+        int[] maxElements = Main.findMaxElements(matrix);
+        System.out.println("\nМаксимальні елементи в кожному рядку матриці:");
+        for (int element : maxElements) {
+            System.out.println(element);
+        }
+    }
+}
+```
+
+### Приклад роботи програми
+
+![](image/r.png)
+
 [![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-7f7980b617ed060a017424585567c406b6ee15c891e84e1186181d67ecf80aa0.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=14917712)
 # Практична робота "Поглиблене використання масивів"
 
